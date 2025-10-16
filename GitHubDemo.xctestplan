@@ -1,0 +1,38 @@
+{
+  "configurations" : [
+    {
+      "id" : "BEEF59C1-E935-471E-93E9-222EFA7354CB",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:PackageDependencies\/NetworkKit",
+        "identifier" : "NetworkKitTests",
+        "name" : "NetworkKitTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:GitHubDemo.xcodeproj",
+        "identifier" : "0194E6312EA01315004B6C95",
+        "name" : "GitHubDemoTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:GitHubDemo.xcodeproj",
+        "identifier" : "0194E63B2EA01315004B6C95",
+        "name" : "GitHubDemoUITests"
+      }
+    }
+  ],
+  "version" : 1
+}
