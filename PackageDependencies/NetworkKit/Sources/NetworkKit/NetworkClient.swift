@@ -15,19 +15,26 @@ final class NetworkClient: NetworkClientProtocol {
         self.urlSession = urlSession
     }
 
-    func execute<ResponseType: Decodable>(request: Request<ResponseType>) async throws -> ResponseType {
+    func execute<ResponseType: Decodable>(
+        request: Request<ResponseType>,
+        responseheaderName: String?
+    ) async throws -> (response: ResponseType, responseHeader: String?) {
         do {
             guard let urlRequest = request.urlRequest else {
                 throw ServiceError.urlMalformed
             }
             let (data, urlResponse) = try await urlSession.data(for: urlRequest, delegate: nil)
-            let statusCode = (urlResponse as? HTTPURLResponse)?.statusCode
+            let httpResponse = (urlResponse as? HTTPURLResponse)
+            let statusCode = httpResponse?.statusCode
             // If status code not 200 then throw an error
             guard let statusCode = statusCode,
                   (200..<300).contains(statusCode) else {
                 throw ServiceError.errorResponseCode(code: statusCode)
             }
-            return try jsonDecoder.decode(ResponseType.self, from: data)
+            return (
+                response: try jsonDecoder.decode(ResponseType.self, from: data),
+                responseHeader: httpResponse?.value(forHTTPHeaderField: responseheaderName ?? "")
+            )
         } catch let error as ServiceError {
             throw error
         } catch let error as DecodingError {

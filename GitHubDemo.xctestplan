@@ -14,6 +14,13 @@
   "testTargets" : [
     {
       "target" : {
+        "containerPath" : "container:PackageDependencies\/UserDetailsDomainLayer",
+        "identifier" : "UserDetailsDomainLayerTests",
+        "name" : "UserDetailsDomainLayerTests"
+      }
+    },
+    {
+      "target" : {
         "containerPath" : "container:PackageDependencies\/NetworkKit",
         "identifier" : "NetworkKitTests",
         "name" : "NetworkKitTests"
@@ -22,15 +29,15 @@
     {
       "target" : {
         "containerPath" : "container:GitHubDemo.xcodeproj",
-        "identifier" : "0194E6312EA01315004B6C95",
-        "name" : "GitHubDemoTests"
+        "identifier" : "0194E63B2EA01315004B6C95",
+        "name" : "GitHubDemoUITests"
       }
     },
     {
       "target" : {
         "containerPath" : "container:GitHubDemo.xcodeproj",
-        "identifier" : "0194E63B2EA01315004B6C95",
-        "name" : "GitHubDemoUITests"
+        "identifier" : "0194E6312EA01315004B6C95",
+        "name" : "GitHubDemoTests"
       }
     }
   ],

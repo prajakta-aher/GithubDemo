@@ -36,15 +36,25 @@ final class NetworkingClientTests: XCTestCase {
                 url: try XCTUnwrap(mockRequest.urlRequest?.url),
                 statusCode: 200,
                 httpVersion: "HTTP/1.1",
-                headerFields: nil
+                headerFields: [
+                    "Link":
+                    "<https://api.github.com/repositories/1300192/issues?per_page=2&page=2>; rel=\"next\""
+                ]
             )
         )
-
         // When
-        let actualResponse = try await sut.execute(request: mockRequest)
+        let (actualResponse, responseHeader) = try await sut.execute(request: mockRequest, responseheaderName: "Link")
 
         // Then
-        XCTAssertEqual("MockResponse", actualResponse, "Decoded response should match mock data")
+        XCTAssertEqual(
+            "MockResponse",
+            actualResponse,
+            "Decoded response should match mock data"
+        )
+        XCTAssertEqual(
+            responseHeader,
+            "<https://api.github.com/repositories/1300192/issues?per_page=2&page=2>; rel=\"next\""
+        )
     }
 
     func testExecute_whenErrorStatusCode_thenThrowsError() async throws {
@@ -69,7 +79,7 @@ final class NetworkingClientTests: XCTestCase {
 
         // When/Then
         do {
-            _ = try await sut.execute(request: mockRequest)
+            _ = try await sut.execute(request: mockRequest, responseheaderName: nil)
             XCTFail("Expected error to be thrown for 500 status code")
         } catch {
             if case let ServiceError.errorResponseCode(code) = error {

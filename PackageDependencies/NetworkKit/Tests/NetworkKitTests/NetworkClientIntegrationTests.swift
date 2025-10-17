@@ -34,7 +34,7 @@ final class NetworkClientIntegrationTests: XCTestCase {
         )
 
         // When
-        let response = try await sut.execute(request: request)
+        let (response, _) = try await sut.execute(request: request, responseheaderName: nil)
 
         // Then
         XCTAssertEqual(response, expectedResponse, "Response should match the mock response")
@@ -52,7 +52,7 @@ final class NetworkClientIntegrationTests: XCTestCase {
 
         // When/Then
         do {
-            _ = try await sut.execute(request: request)
+            _ = try await sut.execute(request: request, responseheaderName: nil)
             XCTFail("Expected ServiceError to be thrown")
         } catch {
             // Verify it's a ServiceError.underlying since MockDataProvider returns NSError

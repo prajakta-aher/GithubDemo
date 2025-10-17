@@ -14,7 +14,7 @@ open class Request<ResponseType> { // phantom type for binding a request to s re
         baseUrlString: String,
         path: String,
         method: HttpMethod,
-        headers: [String : String]?,
+        headers: [String : String]? = nil,
         queryItems: [String: String] = [:],
         customDataBody: Data? = nil
     ) {

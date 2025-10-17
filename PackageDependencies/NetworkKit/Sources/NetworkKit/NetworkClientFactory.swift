@@ -6,7 +6,6 @@ public struct NetworkApiClientFactory: NetworkApiClientFactoryProtocol {
 
     private var customDecoder: JSONDecoder {
         let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
     }
 

@@ -1,5 +1,8 @@
 import Foundation
 
 public protocol NetworkClientProtocol {
-    func execute<ResponseType: Decodable>(request: Request<ResponseType>) async throws -> ResponseType
+    func execute<ResponseType: Decodable>(
+        request: Request<ResponseType>,
+        responseheaderName: String?
+    ) async throws -> (response: ResponseType, responseHeader: String?)
 }

@@ -27,7 +27,6 @@
 		0194E61C2EA0130D004B6C95 /* GitHubDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitHubDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0194E6322EA01315004B6C95 /* GitHubDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GitHubDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0194E63C2EA01315004B6C95 /* GitHubDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GitHubDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		0194E66E2EA15674004B6C95 /* NetworkKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NetworkKit; sourceTree = "<group>"; };
 		0194E6702EA158D0004B6C95 /* GitHubDemo.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = GitHubDemo.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -36,6 +35,14 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
+			);
+			target = 0194E61B2EA0130D004B6C95 /* GitHubDemo */;
+		};
+		01D9FC662EA172FF00863872 /* Exceptions for "PackageDependencies" folder in "GitHubDemo" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				NetworkKit,
+				UserDetailsDomainLayer,
 			);
 			target = 0194E61B2EA0130D004B6C95 /* GitHubDemo */;
 		};
@@ -58,6 +65,14 @@
 		0194E63F2EA01315004B6C95 /* GitHubDemoUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = GitHubDemoUITests;
+			sourceTree = "<group>";
+		};
+		01D9FC652EA172FF00863872 /* PackageDependencies */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				01D9FC662EA172FF00863872 /* Exceptions for "PackageDependencies" folder in "GitHubDemo" target */,
+			);
+			path = PackageDependencies;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -91,7 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				0194E6702EA158D0004B6C95 /* GitHubDemo.xctestplan */,
-				0194E66F2EA15674004B6C95 /* PackageDependencies */,
+				01D9FC652EA172FF00863872 /* PackageDependencies */,
 				0194E61E2EA0130D004B6C95 /* GitHubDemo */,
 				0194E6352EA01315004B6C95 /* GitHubDemoTests */,
 				0194E63F2EA01315004B6C95 /* GitHubDemoUITests */,
@@ -107,14 +122,6 @@
 				0194E63C2EA01315004B6C95 /* GitHubDemoUITests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		0194E66F2EA15674004B6C95 /* PackageDependencies */ = {
-			isa = PBXGroup;
-			children = (
-				0194E66E2EA15674004B6C95 /* NetworkKit */,
-			);
-			path = PackageDependencies;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -134,6 +141,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				0194E61E2EA0130D004B6C95 /* GitHubDemo */,
+				01D9FC652EA172FF00863872 /* PackageDependencies */,
 			);
 			name = GitHubDemo;
 			packageProductDependencies = (
