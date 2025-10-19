@@ -25,7 +25,7 @@ struct UserListView<ViewProtocol: UserListViewModelProtocol>: View {
                             isPresented: .constant(true),
                             actions: {}
                         )
-                case let .loaded(list, hasMoreRecords):
+                case let .loaded(list, hasMoreRecords, errorMessage):
                     List {
                         ForEach(list, id: \.id) { user in
                             UserRowView(userModel: user)
@@ -38,6 +38,11 @@ struct UserListView<ViewProtocol: UserListViewModelProtocol>: View {
                                 }
                         }
                     }
+                    .alert(
+                        errorMessage ?? "",
+                        isPresented: .constant(errorMessage != nil),
+                        actions: {}
+                    )
                 }
             }
             .onAppear {
@@ -64,7 +69,8 @@ final class MockViewModel: UserListViewModelProtocol {
                     name: "User 0"
                 )
             ],
-            hasMoreRecords: true
+            hasMoreRecords: true,
+            errorMessage: nil
         )
     }
     func loadNextUsers() {
@@ -76,7 +82,8 @@ final class MockViewModel: UserListViewModelProtocol {
                     name: "User \($0)"
                 )
             },
-            hasMoreRecords: false
+            hasMoreRecords: false,
+            errorMessage: nil
         )
     }
     init() {}

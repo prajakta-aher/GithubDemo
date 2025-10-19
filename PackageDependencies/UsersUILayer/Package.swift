@@ -31,7 +31,17 @@ let package = Package(
         ),
         .testTarget(
             name: "UsersUILayerTests",
-            dependencies: ["UsersUILayer"]
+            dependencies: [
+                "UsersUILayer",
+                .product(
+                    name: "UserDetailsDomainLayerInterface",
+                    package: "UserDetailsDomainLayer"
+                ),
+                .product(
+                    name: "UserDetailsDomainLayerMocks",
+                    package: "UserDetailsDomainLayer"
+                )
+            ]
         ),
     ]
 )
