@@ -38,6 +38,7 @@ struct UserListView<ViewProtocol: UserListViewModelProtocol>: View {
                                 }
                         }
                     }
+                    .listStyle(.plain)
                     .alert(
                         errorMessage ?? "",
                         isPresented: .constant(errorMessage != nil),

@@ -32,6 +32,7 @@ public final class UserListViewController<ViewModel: UserListViewModelProtocol>:
     // MARK: Private methods
 
     private func setupView() {
+        view.backgroundColor = .systemBackground
         let contentController = UIHostingController<UserListView<ViewModel>>(
             rootView: UserListView<ViewModel>(
                 viewModel: viewModel
