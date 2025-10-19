@@ -44,10 +44,10 @@ public final class UserListViewController<ViewModel: UserListViewModelProtocol>:
         self.view.addSubview(swiftUIView)
         NSLayoutConstraint.activate(
             [
-                swiftUIView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-                swiftUIView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
-                swiftUIView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
-                swiftUIView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+                swiftUIView.topAnchor.constraint(equalTo: view.topAnchor),
+                swiftUIView.leftAnchor.constraint(equalTo: view.leftAnchor),
+                swiftUIView.rightAnchor.constraint(equalTo: view.rightAnchor),
+                swiftUIView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             ]
         )
         hostingController?.didMove(toParent: self)
