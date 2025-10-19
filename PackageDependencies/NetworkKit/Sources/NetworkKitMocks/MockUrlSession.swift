@@ -1,6 +1,8 @@
 import Foundation
 import NetworkKitInterface
 
+/// Mock Url session for testing the network layer end to end
+/// intercepts the network calls when the URLSession methods are called
 public final class MockUrlSession: URLProtocol {
     public override class func canInit(with request: URLRequest) -> Bool {
         return true

@@ -3,7 +3,7 @@ import Foundation
 import NetworkKitInterface
 import UserDetailsDomainLayerInterface
 
-@MainActor // API calls still happen on the background thread and this has business logic more close to view model
+@MainActor /// API calls still happen on the background thread and this class has business logic more close to view model so marked with Main Actor
 final class UsersListRepository: UsersListRepositoryProtocol {
     private var lastState: UsersListApiModel?
     private let networkClient: NetworkClientProtocol

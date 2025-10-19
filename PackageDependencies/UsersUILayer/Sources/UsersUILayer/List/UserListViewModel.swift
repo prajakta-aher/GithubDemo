@@ -30,7 +30,6 @@ final class UserListViewModel: UserListViewModelProtocol {
     // MARK: Public properties
 
     @Published private(set) var viewState: UserListViewState
-    // to limit number of requests on scrolling to next page (rate limiting) - works without default text also
     @Published var searchText: String
     var title: String {
         "Users List"
@@ -63,9 +62,9 @@ final class UserListViewModel: UserListViewModelProtocol {
     
     private func bindSearchTextPublisher(debounceDelay: TimeInterval) {
         searchSubscription = $searchText
-            .dropFirst() // the first list is loaded in onAppear
+            .dropFirst() // Called on onAppear - ignore first value
             .removeDuplicates() // do not send request if the search query has not changed
-            .debounce(for: .seconds(debounceDelay), scheduler: DispatchQueue.main)
+            .debounce(for: .seconds(debounceDelay), scheduler: DispatchQueue.main) // optimize API requests
             .sink(
                 receiveValue: { [weak self] text in
                     guard let self = self else { return }

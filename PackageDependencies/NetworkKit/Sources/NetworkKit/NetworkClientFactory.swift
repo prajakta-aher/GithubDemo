@@ -1,6 +1,7 @@
 import Foundation
 import NetworkKitInterface
 
+///  Factory creating the network client
 public struct NetworkApiClientFactory: NetworkApiClientFactoryProtocol {
     public init() {}
 

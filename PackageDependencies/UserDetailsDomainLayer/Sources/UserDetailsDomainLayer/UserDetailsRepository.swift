@@ -2,6 +2,7 @@ import Foundation
 import NetworkKitInterface
 import UserDetailsDomainLayerInterface
 
+/// Repository loads details for the user details screen. Marked with main actor but API requests are executed on background threads
 @MainActor
 public final class UserDetailsRepository: UsersDetailsRepositoryProtocol {
     private let networkClient: NetworkClientProtocol

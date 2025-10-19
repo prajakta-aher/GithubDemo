@@ -3,6 +3,7 @@ import NetworkKitInterface
 
 extension URLSession: URLSessionProtocol {}
 
+/// Networking client that interacts with the endpoints
 final class NetworkClient: NetworkClientProtocol {
     private let jsonDecoder: JSONDecoder
     private let urlSession: URLSessionProtocol

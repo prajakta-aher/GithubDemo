@@ -2,6 +2,7 @@ import SwiftUI
 import UIUtilities
 
 struct UserListView<ViewProtocol: UserListViewModelProtocol>: View {
+    // Observed object instead of @StateObject since lifecycle managed by ViewController
     @ObservedObject private var viewModel: ViewProtocol
 
     // MARK: Initializer
@@ -36,6 +37,7 @@ struct UserListView<ViewProtocol: UserListViewModelProtocol>: View {
                 viewModel.loadUsers()
             }
             .navigationTitle(viewModel.title)
+            // searchable needs navigation stack, but UIKit navigation + coordinators are used for navigating to other screens
             .searchable(text: $viewModel.searchText)
             .accessibilityIdentifier(UsersListAccessibilityIdentifiers.searchBar.rawValue)
             .navigationBarTitleDisplayMode(.inline)

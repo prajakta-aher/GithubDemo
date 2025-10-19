@@ -1,5 +1,6 @@
 import UserDetailsDomainLayerInterface
 
+/// Can be @unchecked Sendable sicne we create a new object for each test and hence can be used in parallel tests also
 public final class UsersListRepositoryMock: UsersListRepositoryProtocol, @unchecked Sendable {
     public var loadUsersListResponse: UsersListApiModel = .init(items: [])
     public var loadUsersListError: Error?
