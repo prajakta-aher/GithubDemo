@@ -6,6 +6,16 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		019247D72EA43F3300C344A3 /* NetworkKit in Frameworks */ = {isa = PBXBuildFile; productRef = 019247D62EA43F3300C344A3 /* NetworkKit */; };
+		019247D92EA43F3300C344A3 /* NetworkKitInterface in Frameworks */ = {isa = PBXBuildFile; productRef = 019247D82EA43F3300C344A3 /* NetworkKitInterface */; };
+		019247DB2EA43F4000C344A3 /* UIUtilities in Frameworks */ = {isa = PBXBuildFile; productRef = 019247DA2EA43F4000C344A3 /* UIUtilities */; };
+		019247DD2EA43F4600C344A3 /* UserDetailsDomainLayer in Frameworks */ = {isa = PBXBuildFile; productRef = 019247DC2EA43F4600C344A3 /* UserDetailsDomainLayer */; };
+		019247DF2EA43F4600C344A3 /* UserDetailsDomainLayerInterface in Frameworks */ = {isa = PBXBuildFile; productRef = 019247DE2EA43F4600C344A3 /* UserDetailsDomainLayerInterface */; };
+		019247E12EA43F5100C344A3 /* UsersUILayer in Frameworks */ = {isa = PBXBuildFile; productRef = 019247E02EA43F5100C344A3 /* UsersUILayer */; };
+		019248062EA446D500C344A3 /* NetworkKitMocks in Frameworks */ = {isa = PBXBuildFile; productRef = 019248052EA446D500C344A3 /* NetworkKitMocks */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		0194E6332EA01315004B6C95 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -82,6 +92,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				019247DD2EA43F4600C344A3 /* UserDetailsDomainLayer in Frameworks */,
+				019247DF2EA43F4600C344A3 /* UserDetailsDomainLayerInterface in Frameworks */,
+				019247D92EA43F3300C344A3 /* NetworkKitInterface in Frameworks */,
+				019247D72EA43F3300C344A3 /* NetworkKit in Frameworks */,
+				019247DB2EA43F4000C344A3 /* UIUtilities in Frameworks */,
+				019247E12EA43F5100C344A3 /* UsersUILayer in Frameworks */,
+				019248062EA446D500C344A3 /* NetworkKitMocks in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,6 +119,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		019247D52EA43F3300C344A3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		0194E6132EA0130D004B6C95 = {
 			isa = PBXGroup;
 			children = (
@@ -110,6 +134,7 @@
 				0194E61E2EA0130D004B6C95 /* GitHubDemo */,
 				0194E6352EA01315004B6C95 /* GitHubDemoTests */,
 				0194E63F2EA01315004B6C95 /* GitHubDemoUITests */,
+				019247D52EA43F3300C344A3 /* Frameworks */,
 				0194E61D2EA0130D004B6C95 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -145,6 +170,13 @@
 			);
 			name = GitHubDemo;
 			packageProductDependencies = (
+				019247D62EA43F3300C344A3 /* NetworkKit */,
+				019247D82EA43F3300C344A3 /* NetworkKitInterface */,
+				019247DA2EA43F4000C344A3 /* UIUtilities */,
+				019247DC2EA43F4600C344A3 /* UserDetailsDomainLayer */,
+				019247DE2EA43F4600C344A3 /* UserDetailsDomainLayerInterface */,
+				019247E02EA43F5100C344A3 /* UsersUILayer */,
+				019248052EA446D500C344A3 /* NetworkKitMocks */,
 			);
 			productName = GitHubDemo;
 			productReference = 0194E61C2EA0130D004B6C95 /* GitHubDemo.app */;
@@ -313,9 +345,10 @@
 				INFOPLIST_FILE = GitHubDemo/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -340,9 +373,10 @@
 				INFOPLIST_FILE = GitHubDemo/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -482,7 +516,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Demo.GitHubDemoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -500,7 +534,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Demo.GitHubDemoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -517,6 +551,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Demo.GitHubDemoUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -533,6 +568,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Demo.GitHubDemoUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -583,6 +619,37 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		019247D62EA43F3300C344A3 /* NetworkKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NetworkKit;
+		};
+		019247D82EA43F3300C344A3 /* NetworkKitInterface */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NetworkKitInterface;
+		};
+		019247DA2EA43F4000C344A3 /* UIUtilities */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = UIUtilities;
+		};
+		019247DC2EA43F4600C344A3 /* UserDetailsDomainLayer */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = UserDetailsDomainLayer;
+		};
+		019247DE2EA43F4600C344A3 /* UserDetailsDomainLayerInterface */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = UserDetailsDomainLayerInterface;
+		};
+		019247E02EA43F5100C344A3 /* UsersUILayer */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = UsersUILayer;
+		};
+		019248052EA446D500C344A3 /* NetworkKitMocks */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NetworkKitMocks;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0194E6142EA0130D004B6C95 /* Project object */;
 }

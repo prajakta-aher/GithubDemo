@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol NetworkClientProtocol {
+public protocol NetworkClientProtocol: Sendable {
     func execute<ResponseType: Decodable>(
         request: Request<ResponseType>,
         responseheaderName: String?

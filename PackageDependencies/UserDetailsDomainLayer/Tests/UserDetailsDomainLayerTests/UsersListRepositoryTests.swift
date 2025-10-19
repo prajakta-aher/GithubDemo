@@ -8,13 +8,20 @@ final class UsersListRepositoryTests: XCTestCase {
     private var sut: UsersListRepository!
     private let jsonEncoder: JSONEncoder = JSONEncoder()
     
-    override func setUp() {
-        super.setUp()
+    @MainActor
+    private func makeSut() {
         networkClient = NetworkClientMock()
-        sut = UsersListRepository(networkClient: networkClient)
+        sut = UsersListRepository(baseUrlString: "someApi", networkClient: networkClient)
     }
-    
+
+    override func tearDown() {
+        sut = nil
+        networkClient = nil
+    }
+
+    @MainActor
     func testGetNextPage_whenContainsNextPage_thenReturnsNextPageNumber() {
+        makeSut()
         let linkHeader = #"""
             <https://api.github.com/repositories/1300192/issues?per_page=2&page=2>; rel="next", <https://api.github.com/repositories/1300192/issues?per_page=2&page=7715>; rel="last"
             """#
@@ -24,7 +31,9 @@ final class UsersListRepositoryTests: XCTestCase {
         XCTAssertEqual(nextPage, "2")
     }
     
+    @MainActor
     func testGetNextPage_whenDoesNotContainsNextPage_thenReturnsNil() {
+        makeSut()
         let linkHeader = #"""
             <https://api.github.com/repositories/1300192/issues?per_page=2&page=7715>; rel="last"
             """#
@@ -34,7 +43,9 @@ final class UsersListRepositoryTests: XCTestCase {
         XCTAssertNil(nextPage)
     }
     
+    @MainActor
     func testGetNextPage_whenNextPageInvalid_thenReturnsNil() {
+        makeSut()
         let linkHeader = #"""
             <https://api.github.com/repositories/1300192/issues?per_page=2&page=a>; rel="next"
             """#
@@ -44,7 +55,9 @@ final class UsersListRepositoryTests: XCTestCase {
         XCTAssertNil(nextPage)
     }
     
+    @MainActor
     func testLoadUsersList_whenCalled_returnsCorrectApiModelAndNextPage() async throws {
+        makeSut()
         let items = [
             UserItemApiModel(
                 id: "id1",
@@ -68,7 +81,9 @@ final class UsersListRepositoryTests: XCTestCase {
         XCTAssertEqual(networkClient.executeCallsCount, 1)
     }
     
+    @MainActor
     func testLoadUsersList_whenCalledWithoutLinkHeader_returnsCorrectApiModel() async throws {
+        makeSut()
         let expectedApiModel = UsersListApiModel(
             items: [
                 UserItemApiModel(
@@ -89,7 +104,9 @@ final class UsersListRepositoryTests: XCTestCase {
         )
     }
     
+    @MainActor
     func testLoadNextUsersList_whenCalledWithNoNextPage_returnsNil() async throws {
+        makeSut()
         let items = [
             UserItemApiModel(
                 id: "id1",
@@ -108,7 +125,9 @@ final class UsersListRepositoryTests: XCTestCase {
         XCTAssertNil(nextModel)
     }
 
+    @MainActor
     func testLoadNextUsersList_whenCalledWithNextPage_returnsCorrectApiModel() async throws {
+        makeSut()
         let items1 = [
             UserItemApiModel(
                 id: "id1",

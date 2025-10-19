@@ -1,0 +1,55 @@
+import UIKit
+import SwiftUI
+
+public final class UserListViewController<ViewModel: UserListViewModelProtocol>: UIViewController {
+    private let viewModel: ViewModel
+    private var hostingController: UIHostingController<UserListView<ViewModel>>?
+
+    init(
+        viewModel: ViewModel
+    ) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: Lifecycle methods
+
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        setupView()
+    }
+
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // Hide the navigation bar to enable displaying the SwiftUI searchbar with searchable
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+
+    // MARK: Private methods
+
+    private func setupView() {
+        let contentController = UIHostingController<UserListView<ViewModel>>(
+            rootView: UserListView<ViewModel>(
+                viewModel: viewModel
+            )
+        )
+        self.hostingController = contentController
+        guard let swiftUIView = contentController.view else { return }
+        self.addChild(contentController)
+        swiftUIView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(swiftUIView)
+        NSLayoutConstraint.activate(
+            [
+                swiftUIView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+                swiftUIView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
+                swiftUIView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
+                swiftUIView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            ]
+        )
+        hostingController?.didMove(toParent: self)
+    }
+}

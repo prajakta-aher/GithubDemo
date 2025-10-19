@@ -1,6 +1,6 @@
 import Foundation
 
-public struct UserItemApiModel: Codable, Equatable {
+public struct UserItemApiModel: Codable, Equatable, Sendable {
     public let id: String
     public let name: String
     public let imageUrlString: String

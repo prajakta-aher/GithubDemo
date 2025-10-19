@@ -1,6 +1,6 @@
 import Foundation
 
-public struct UsersListApiModel: Codable, Equatable {
+public struct UsersListApiModel: Codable, Equatable, Sendable {
     public private(set) var items: [UserItemApiModel]
     public private(set) var nextPage: String?
 

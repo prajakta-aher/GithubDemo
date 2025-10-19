@@ -1,7 +1,7 @@
 import Foundation
 import NetworkKitInterface
 
-public final class NetworkClientMock: NetworkClientProtocol {
+public final class NetworkClientMock: NetworkClientProtocol, @unchecked Sendable { // can create new instance per testcase to support parallel tests
     public var responseData: Data?
     public var responseHeader: String?
     public private(set) var executeCallsCount: Int = 0

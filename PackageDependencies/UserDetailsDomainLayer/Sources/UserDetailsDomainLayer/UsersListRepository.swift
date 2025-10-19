@@ -3,12 +3,15 @@ import Foundation
 import NetworkKitInterface
 import UserDetailsDomainLayerInterface
 
+@MainActor // API calls still happen on the background thread and this has business logic more close to view model
 final class UsersListRepository: UsersListRepositoryProtocol {
     private var lastState: UsersListApiModel?
-    let networkClient: NetworkClientProtocol
+    private let networkClient: NetworkClientProtocol
+    private let baseUrlString: String
 
-    init(networkClient: NetworkClientProtocol) {
+    init(baseUrlString: String, networkClient: NetworkClientProtocol) {
         self.networkClient = networkClient
+        self.baseUrlString = baseUrlString
     }
 
     //link: <https://api.github.com/repositories/1300192/issues?per_page=2&page=2>; rel="next", <https://api.github.com/repositories/1300192/issues?per_page=2&page=7715>; rel="last"
@@ -27,6 +30,7 @@ final class UsersListRepository: UsersListRepositoryProtocol {
     private func loadList(for searchQuery: String, page: String) async throws -> UsersListApiModel {
         var (responseModel, responseHeader) = try await networkClient.execute(
             request: UsersListRequest(
+                baseURlString: baseUrlString,
                 searchTerm: searchQuery,
                 page: page
             ),
@@ -63,12 +67,13 @@ final class UsersListRepository: UsersListRepositoryProtocol {
 }
 
 final class UsersListRequest: Request<UsersListApiModel> {
-    init(searchTerm: String, page: String = "1") {
+    init(baseURlString: String, searchTerm: String, page: String = "1") {
         super.init(
             scheme: "http",
-            baseUrlString: "api.github.com",
+            baseUrlString: baseURlString,
             path: "/search/users",
             method: .get,
+            headers: ["If-None-Match": "etag-value-from-previous-response"], // to prevent rate limiting while testing
             queryItems: [
                 RequestParamsConstants.apiVersionKey: RequestParamsConstants.apiVersionValue,
                 RequestParamsConstants.pageSizeKey: "30",

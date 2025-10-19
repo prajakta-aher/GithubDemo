@@ -2,14 +2,16 @@ import Foundation
 import NetworkKitInterface
 import UserDetailsDomainLayerInterface
 
-final class UsersListRepositoryFactory: UsersListRepositoryFactoryProtocol {
-    let networkClient: NetworkClientProtocol
+public final class UsersListRepositoryFactory: UsersListRepositoryFactoryProtocol {
+    private let networkClient: NetworkClientProtocol
+    private let baseUrlString: String
 
-    init(networkClient: NetworkClientProtocol) {
+    public init(baseUrlString: String, networkClient: NetworkClientProtocol) {
         self.networkClient = networkClient
+        self.baseUrlString = baseUrlString
     }
 
-    func makeRepository() -> UsersListRepositoryProtocol {
-        UsersListRepository(networkClient: networkClient)
+    public func makeRepository() -> UsersListRepositoryProtocol {
+        UsersListRepository(baseUrlString: baseUrlString, networkClient: networkClient)
     }
 }

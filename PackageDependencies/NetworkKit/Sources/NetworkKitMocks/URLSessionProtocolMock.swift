@@ -1,7 +1,7 @@
 import Foundation
 import NetworkKitInterface
 
-public final class URLSessionProtocolMock: URLSessionProtocol {
+public final class URLSessionProtocolMock: URLSessionProtocol, @unchecked Sendable { // can create new instance per testcase to support parallel tests
     public var mockData: Data
     public var httpUrlResponse: HTTPURLResponse
     public var error: ServiceError?

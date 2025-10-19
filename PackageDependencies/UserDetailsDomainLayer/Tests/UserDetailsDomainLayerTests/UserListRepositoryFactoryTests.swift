@@ -6,10 +6,11 @@ final class UsersListRepositoryFactoryTests: XCTestCase {
     var netwokClient: NetworkClientMock!
     var sut: UsersListRepositoryFactory!
 
-    override func setUp() {
+    @MainActor
+    private func makeSut() {
         super.setUp()
         netwokClient = NetworkClientMock()
-        sut = UsersListRepositoryFactory(networkClient: netwokClient)
+        sut = UsersListRepositoryFactory(baseUrlString: "some", networkClient: netwokClient)
     }
 
     override func tearDown() {
@@ -18,7 +19,9 @@ final class UsersListRepositoryFactoryTests: XCTestCase {
         super.tearDown()
     }
 
+    @MainActor
     func testMakeRepository_whenExecuted_returnsFactoryOfCorrectType() {
+        makeSut()
         let repository = sut.makeRepository()
         XCTAssertTrue(repository is UsersListRepository)
     }
