@@ -13,7 +13,8 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../UserDetailsDomainLayer"),
-        .package(path: "../UIUtilities")
+        .package(path: "../UIUtilities"),
+        .package(url: "https://github.com/nalexn/ViewInspector", from: "0.9.0")
     ],
     targets: [
         .target(
@@ -40,7 +41,8 @@ let package = Package(
                 .product(
                     name: "UserDetailsDomainLayerMocks",
                     package: "UserDetailsDomainLayer"
-                )
+                ),
+                .product(name: "ViewInspector", package: "ViewInspector"),
             ]
         ),
     ]

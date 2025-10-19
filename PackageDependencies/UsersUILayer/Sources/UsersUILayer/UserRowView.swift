@@ -1,11 +1,21 @@
 import SwiftUI
 
 struct UserRowView: View {
+    // MARK: Nested views
+    enum AccessibilityIdentifiers: String {
+        case image = "user_list_row_image"
+        case usernameText = "user_list_row_username"
+    }
+
     private let userModel: UserUIModel
+
+    // MARK: Initializer
 
     init(userModel: UserUIModel) {
         self.userModel = userModel
     }
+
+    // MARK: Properties
 
     var body: some View {
         HStack(spacing: 16) {
@@ -29,8 +39,10 @@ struct UserRowView: View {
                     )
                 )
                 .shadow(radius: 5)
+                .accessibilityIdentifier(AccessibilityIdentifiers.image.rawValue)
             Text(userModel.name)
                 .font(.title3)
+                .accessibilityIdentifier(AccessibilityIdentifiers.usernameText.rawValue)
             Spacer()
         }
     }

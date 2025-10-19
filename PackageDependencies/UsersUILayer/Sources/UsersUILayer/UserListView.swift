@@ -3,6 +3,16 @@ import SwiftUI
 struct UserListView<ViewProtocol: UserListViewModelProtocol>: View {
     @ObservedObject private var viewModel: ViewProtocol
     
+    // MARK: Nested views
+    enum AccessibilityIdentifiers: String {
+        case content = "user_list_content_view"
+        case list = "user_list_scrollable_list"
+        case fullScreenProgress = "user_list_full_screen_progress_view"
+        case fullScreenError = "user_list_alert_empty_screen"
+        case searchBar = "user_list_search_bar"
+    }
+
+    // MARK: Initializer
     init(viewModel: ViewProtocol) {
         self.viewModel = viewModel
     }
@@ -18,6 +28,7 @@ struct UserListView<ViewProtocol: UserListViewModelProtocol>: View {
                             height: 50,
                             alignment: .center
                         )
+                        .accessibilityIdentifier(AccessibilityIdentifiers.fullScreenProgress.rawValue)
                 case .error(let message):
                     Color.clear
                         .alert(
@@ -25,6 +36,7 @@ struct UserListView<ViewProtocol: UserListViewModelProtocol>: View {
                             isPresented: .constant(true),
                             actions: {}
                         )
+                        .accessibilityIdentifier(AccessibilityIdentifiers.fullScreenError.rawValue)
                 case let .loaded(list, hasMoreRecords, errorMessage):
                     List {
                         ForEach(list, id: \.id) { user in
@@ -39,6 +51,7 @@ struct UserListView<ViewProtocol: UserListViewModelProtocol>: View {
                         }
                     }
                     .listStyle(.plain)
+                    .accessibilityIdentifier(AccessibilityIdentifiers.list.rawValue)
                     .alert(
                         errorMessage ?? "",
                         isPresented: .constant(errorMessage != nil),
@@ -51,13 +64,15 @@ struct UserListView<ViewProtocol: UserListViewModelProtocol>: View {
             }
             .navigationTitle("Users List")
             .searchable(text: $viewModel.searchText)
+            .accessibilityIdentifier(AccessibilityIdentifiers.searchBar.rawValue)
             .navigationBarTitleDisplayMode(.inline)
         }
+        .accessibilityIdentifier(AccessibilityIdentifiers.content.rawValue)
     }
 }
 
 #if DEBUG
-final class MockViewModel: UserListViewModelProtocol {
+final class MockUserListViewModel: UserListViewModelProtocol {
     @Published var viewState: UserListViewState = .initial
     @Published var searchText: String = ""
 
@@ -91,6 +106,6 @@ final class MockViewModel: UserListViewModelProtocol {
 }
 #endif
 #Preview {
-    UserListView(viewModel: MockViewModel())
+    UserListView(viewModel: MockUserListViewModel())
 }
 
