@@ -65,7 +65,7 @@ final class UsersListRepositoryTests: XCTestCase {
                 imageUrlString: ""
             )
         ]
-        networkClient.responseData = try? jsonEncoder.encode(
+        networkClient.pathToResponse["/search/users"] = try? jsonEncoder.encode(
             UsersListApiModel(
                 items: items
             )
@@ -93,7 +93,7 @@ final class UsersListRepositoryTests: XCTestCase {
                 )
             ]
         )
-        networkClient.responseData = try? jsonEncoder.encode(
+        networkClient.pathToResponse["/search/users"] = try? jsonEncoder.encode(
             expectedApiModel
         )
         networkClient.responseHeader = nil
@@ -114,7 +114,7 @@ final class UsersListRepositoryTests: XCTestCase {
                 imageUrlString: ""
             )
         ]
-        networkClient.responseData = try? jsonEncoder.encode(
+        networkClient.pathToResponse["/search/users"] = try? jsonEncoder.encode(
             UsersListApiModel(
                 items: items
             )
@@ -143,7 +143,7 @@ final class UsersListRepositoryTests: XCTestCase {
             )
         ]
 
-        networkClient.responseData = try? jsonEncoder.encode(
+        networkClient.pathToResponse["/search/users"] = try? jsonEncoder.encode(
             UsersListApiModel(
                 items: items1
             )
@@ -154,7 +154,7 @@ final class UsersListRepositoryTests: XCTestCase {
         _ = try await sut.loadUsersList(searchQuery: "iOS_Dev")
         XCTAssertEqual(networkClient.executeCallsCount, 1)
         
-        networkClient.responseData = try? jsonEncoder.encode(
+        networkClient.pathToResponse["/search/users"] = try? jsonEncoder.encode(
             UsersListApiModel(
                 items: items2
             )

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01691F4D2EA56B8000B17564 /* UIUtilities in Frameworks */ = {isa = PBXBuildFile; productRef = 01691F4C2EA56B8000B17564 /* UIUtilities */; };
 		019247D72EA43F3300C344A3 /* NetworkKit in Frameworks */ = {isa = PBXBuildFile; productRef = 019247D62EA43F3300C344A3 /* NetworkKit */; };
 		019247D92EA43F3300C344A3 /* NetworkKitInterface in Frameworks */ = {isa = PBXBuildFile; productRef = 019247D82EA43F3300C344A3 /* NetworkKitInterface */; };
 		019247DB2EA43F4000C344A3 /* UIUtilities in Frameworks */ = {isa = PBXBuildFile; productRef = 019247DA2EA43F4000C344A3 /* UIUtilities */; };
@@ -113,6 +114,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01691F4D2EA56B8000B17564 /* UIUtilities in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -223,6 +225,7 @@
 			);
 			name = GitHubDemoUITests;
 			packageProductDependencies = (
+				01691F4C2EA56B8000B17564 /* UIUtilities */,
 			);
 			productName = GitHubDemoUITests;
 			productReference = 0194E63C2EA01315004B6C95 /* GitHubDemoUITests.xctest */;
@@ -621,6 +624,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		01691F4C2EA56B8000B17564 /* UIUtilities */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = UIUtilities;
+		};
 		019247D62EA43F3300C344A3 /* NetworkKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = NetworkKit;

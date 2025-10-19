@@ -2,12 +2,12 @@ import Foundation
 import NetworkKitInterface
 
 public final class NetworkClientMock: NetworkClientProtocol, @unchecked Sendable { // can create new instance per testcase to support parallel tests
-    public var responseData: Data?
+    public var pathToResponse: [String: Data] = [:]
     public var responseHeader: String?
     public private(set) var executeCallsCount: Int = 0
 
-    public init(responseData: Data? = nil) {
-        self.responseData = responseData
+    public init(pathToResponse: [String: Data] = [:]) {
+        self.pathToResponse = pathToResponse
     }
 
     public func execute<Response: Decodable>(
@@ -15,7 +15,10 @@ public final class NetworkClientMock: NetworkClientProtocol, @unchecked Sendable
         responseheaderName: String?
     ) async throws -> (response: Response, responseHeader: String?) {
         executeCallsCount += 1
-        if let data = responseData {
+        guard let path = request.urlRequest?.url?.path() else {
+            throw ServiceError.urlMalformed
+        }
+        if let data = pathToResponse[path] {
             // Should be ideally injected, but not required for this example
             return (
                 try JSONDecoder().decode(Response.self, from: data),

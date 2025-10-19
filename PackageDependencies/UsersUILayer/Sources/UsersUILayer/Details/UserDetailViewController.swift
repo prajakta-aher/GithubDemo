@@ -33,6 +33,7 @@ public final class UserDetailViewController<ViewModel: UserDetailViewModelProtoc
 
     private func setupView() {
         view.backgroundColor = .systemBackground
+        self.title = viewModel.title
         let contentController = UIHostingController<UserDetailView<ViewModel>>(
             rootView: UserDetailView<ViewModel>(
                 viewModel: viewModel

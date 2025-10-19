@@ -1,16 +1,8 @@
 import SwiftUI
+import UIUtilities
 
 struct UserListView<ViewProtocol: UserListViewModelProtocol>: View {
     @ObservedObject private var viewModel: ViewProtocol
-    
-    // MARK: Nested views
-    enum AccessibilityIdentifiers: String {
-        case content = "user_list_content_view"
-        case list = "user_list_scrollable_list"
-        case fullScreenProgress = "user_list_full_screen_progress_view"
-        case fullScreenError = "user_list_alert_empty_screen"
-        case searchBar = "user_list_search_bar"
-    }
 
     // MARK: Initializer
     init(viewModel: ViewProtocol) {
@@ -21,14 +13,9 @@ struct UserListView<ViewProtocol: UserListViewModelProtocol>: View {
         NavigationStack {
             VStack {
                 switch viewModel.viewState {
-                case .initial:
-                    ProgressView()
-                        .frame(
-                            width: SpacingConstants.iconWidth,
-                            height: SpacingConstants.iconHeight,
-                            alignment: .center
-                        )
-                        .accessibilityIdentifier(AccessibilityIdentifiers.fullScreenProgress.rawValue)
+                case .emptyState:
+                    emptyStateView
+                        .accessibilityIdentifier(UsersListAccessibilityIdentifiers.fullScreenProgress.rawValue)
                 case .error(let message):
                     Color.clear
                         .alert(
@@ -36,29 +23,12 @@ struct UserListView<ViewProtocol: UserListViewModelProtocol>: View {
                             isPresented: .constant(true),
                             actions: {}
                         )
-                        .accessibilityIdentifier(AccessibilityIdentifiers.fullScreenError.rawValue)
+                        .accessibilityIdentifier(UsersListAccessibilityIdentifiers.fullScreenError.rawValue)
                 case let .loaded(list, hasMoreRecords, errorMessage):
-                    List {
-                        ForEach(list, id: \.id) { user in
-                            UserRowView(userModel: user)
-                                .onTapGesture {
-                                    viewModel.selectedUser(userName: user.name)
-                                }
-                        }
-                        if hasMoreRecords {
-                            ProgressView()
-                                .frame(maxWidth: .infinity)
-                                .onAppear {
-                                    viewModel.loadNextUsers()
-                                }
-                        }
-                    }
-                    .listStyle(.plain)
-                    .accessibilityIdentifier(AccessibilityIdentifiers.list.rawValue)
-                    .alert(
-                        errorMessage ?? "",
-                        isPresented: .constant(errorMessage != nil),
-                        actions: {}
+                    listContentView(
+                        list: list,
+                        hasMoreRecords: hasMoreRecords,
+                        errorMessage: errorMessage
                     )
                 }
             }
@@ -67,17 +37,70 @@ struct UserListView<ViewProtocol: UserListViewModelProtocol>: View {
             }
             .navigationTitle(viewModel.title)
             .searchable(text: $viewModel.searchText)
-            .accessibilityIdentifier(AccessibilityIdentifiers.searchBar.rawValue)
+            .accessibilityIdentifier(UsersListAccessibilityIdentifiers.searchBar.rawValue)
             .navigationBarTitleDisplayMode(.inline)
         }
-        .accessibilityIdentifier(AccessibilityIdentifiers.content.rawValue)
+        .accessibilityIdentifier(UsersListAccessibilityIdentifiers.content.rawValue)
+    }
+
+    @ViewBuilder
+    private var emptyStateView: some View {
+        Image(systemName: "magnifyingglass")
+            .font(
+                .system(
+                    size: .init(
+                        SpacingConstants.iconWidth
+                    )
+                )
+            )
+            .foregroundColor(.gray)
+
+        Text(viewModel.emptyStateMessage)
+            .font(.body)
+            .fontWeight(.light)
+    }
+    
+    @ViewBuilder
+    private func listContentView(
+        list: [UserUIModel],
+        hasMoreRecords: Bool,
+        errorMessage: String?
+    ) -> some View {
+        List {
+            ForEach(list, id: \.id) { user in
+                UserRowView(userModel: user)
+                    .accessibilityIdentifier(UsersListAccessibilityIdentifiers.row.rawValue)
+                    .onTapGesture {
+                        viewModel.selectedUser(userName: user.name)
+                    }
+            }
+            if hasMoreRecords {
+                ProgressView()
+                    .frame(maxWidth: .infinity)
+                    .onAppear {
+                        viewModel.loadNextUsers()
+                    }
+            }
+        }
+        .listStyle(.plain)
+        .accessibilityIdentifier(UsersListAccessibilityIdentifiers.list.rawValue)
+        .alert(
+            errorMessage ?? "",
+            isPresented: .constant(errorMessage != nil),
+            actions: {}
+        )
     }
 }
 
 #if DEBUG
 final class MockUserListViewModel: UserListViewModelProtocol {
-    var title: String = "Users List"
-    @Published var viewState: UserListViewState = .initial
+    var title: String {
+        "Users List"
+    }
+    var emptyStateMessage: String {
+        "Find GitHub Users. Enter a username to search."
+    }
+    @Published var viewState: UserListViewState = .emptyState
     @Published var searchText: String = ""
 
     func loadUsers() {

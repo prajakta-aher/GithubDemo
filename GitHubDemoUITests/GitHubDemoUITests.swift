@@ -6,36 +6,50 @@
 //
 
 import XCTest
+import UIUtilities
+
+final class UserListPage {
+    private let app: XCUIApplication!
+    
+    init(app: XCUIApplication!) {
+        self.app = app
+    }
+    
+    var navigationBar: XCUIElement {
+        app.navigationBars["Users List"]
+    }
+
+    var contentView: XCUIElement {
+        app.otherElements[UsersListAccessibilityIdentifiers.content.rawValue]
+    }
+}
 
 final class GitHubDemoUITests: XCTestCase {
+    var page: UserListPage!
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
-        // In UI tests it is usually best to stop immediately when a failure occurs.
+    override func setUp() {
+        super.setUp()
         continueAfterFailure = false
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    @MainActor
-    func testExample() throws {
-        // UI tests must launch the application that they test.
         let app = XCUIApplication()
+        app.launchArguments = ["UITesting"]
+        page = UserListPage(app: app)
         app.launch()
-
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
 
+    override func tearDown() {
+        page = nil
+        super.tearDown()
+    }
+
+    // MARK: - Navigation to Detail View Tests
+
     @MainActor
-    func testLaunchPerformance() throws {
-        // This measures how long it takes to launch your application.
-        measure(metrics: [XCTApplicationLaunchMetric()]) {
-            XCUIApplication().launch()
-        }
+    func testListView() async throws {
+        XCTAssertTrue(page.contentView.waitForExistence(timeout: 5), "User list should appear")
+
+        XCTAssertTrue(
+            page.navigationBar.exists,
+            "Should be on list view"
+        )
     }
 }

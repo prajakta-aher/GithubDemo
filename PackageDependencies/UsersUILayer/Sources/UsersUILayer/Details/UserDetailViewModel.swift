@@ -24,7 +24,9 @@ final class UserDetailViewModel: UserDetailViewModelProtocol {
     var title: String {
         "User Details"
     }
-    
+    private let followersTitle = "Followers" // should be localized
+    private let repositoriesTitle = "Public repositories" // should be localized
+
     // MARK: Init
     init(username: String, repository: UsersDetailsRepositoryProtocol) {
         self.username = username
@@ -45,8 +47,8 @@ final class UserDetailViewModel: UserDetailViewModelProtocol {
                             id: detailsApiModel.id,
                             imageUrl: URL(string: detailsApiModel.imageUrlString),
                             name: detailsApiModel.name,
-                            followers: "\(detailsApiModel.followers)",
-                            publicRepositories: "\(detailsApiModel.publicRepositories)"
+                            followers: "\(detailsApiModel.followers) \(self.followersTitle)",
+                            publicRepositories: "\(detailsApiModel.publicRepositories) \(self.repositoriesTitle)"
                         )
                 )
             } catch {

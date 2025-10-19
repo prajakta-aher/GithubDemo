@@ -12,7 +12,12 @@ final class UserListViewModelTests: XCTestCase {
     private func makeSut(debounceDelay: TimeInterval = 0) {
         cancellables = Set<AnyCancellable>()
         repository = UsersListRepositoryMock()
-        sut = UserListViewModel(repository: repository, debounceDelay: debounceDelay)
+        sut = UserListViewModel(
+            repository: repository,
+            navigationDelegate: nil,
+            debounceDelay: debounceDelay,
+            searchText: "ios"
+        )
     }
     
     override func tearDown() {
@@ -52,7 +57,7 @@ final class UserListViewModelTests: XCTestCase {
         XCTAssertEqual(
             viewStates,
             [
-                .initial,
+                .emptyState,
                 .loaded(
                     list: [
                         UserUIModel(
@@ -94,7 +99,7 @@ final class UserListViewModelTests: XCTestCase {
         XCTAssertEqual(
             viewStates,
             [
-                .initial,
+                .emptyState,
                 .error(message: "Error occured while loading users")
             ],
             "loadUser should return view model"
@@ -135,7 +140,7 @@ final class UserListViewModelTests: XCTestCase {
         XCTAssertEqual(
             viewStates,
             [
-                .initial,
+                .emptyState,
                 .loaded(
                     list: [
                         UserUIModel(
@@ -178,7 +183,7 @@ final class UserListViewModelTests: XCTestCase {
         XCTAssertEqual(
             viewStates,
             [
-                .initial,
+                .emptyState,
                 .error(message: "Error occured while loading users")
             ],
             "loadUser should return view model"
@@ -247,7 +252,7 @@ final class UserListViewModelTests: XCTestCase {
         XCTAssertEqual(
             viewStates,
             [
-                .initial,
+                .emptyState,
                 .loaded(
                     list: [
                         UserUIModel(

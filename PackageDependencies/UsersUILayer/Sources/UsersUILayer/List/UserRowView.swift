@@ -1,12 +1,7 @@
 import SwiftUI
+import UIUtilities
 
 struct UserRowView: View {
-    // MARK: Nested views
-    enum AccessibilityIdentifiers: String {
-        case image = "user_list_row_image"
-        case usernameText = "user_list_row_username"
-    }
-
     private let userModel: UserUIModel
 
     // MARK: Initializer
@@ -23,7 +18,6 @@ struct UserRowView: View {
                     image.resizable()
                 } placeholder: {
                     Image(
-                        // Image names should be a part of design system
                         systemName: "person.crop.circle.fill"
                     )
                     .resizable()
@@ -38,12 +32,12 @@ struct UserRowView: View {
                     )
                 )
                 .shadow(radius: SpacingConstants.shadowCornerRadius)
-                .accessibilityIdentifier(AccessibilityIdentifiers.image.rawValue)
             Text(userModel.name)
                 .font(.title3)
-                .accessibilityIdentifier(AccessibilityIdentifiers.usernameText.rawValue)
             Spacer()
         }
+        .frame(maxWidth: .greatestFiniteMagnitude)
+        .accessibilityElement(children: .combine)
     }
 }
 

@@ -3,7 +3,7 @@ import Combine
 import UserDetailsDomainLayerInterface
 
 public enum UserListViewState: Equatable {
-    case initial
+    case emptyState
     case error(message: String)
     case loaded(list: [UserUIModel], hasMoreRecords: Bool, errorMessage: String?)
 }
@@ -12,6 +12,7 @@ public enum UserListViewState: Equatable {
 public protocol UserListViewModelProtocol: ObservableObject {
     var viewState: UserListViewState { get }
     var title: String { get }
+    var emptyStateMessage: String { get }
     var searchText: String { get set }
     func loadUsers()
     func loadNextUsers()
@@ -31,7 +32,12 @@ final class UserListViewModel: UserListViewModelProtocol {
     @Published private(set) var viewState: UserListViewState
     // to limit number of requests on scrolling to next page (rate limiting) - works without default text also
     @Published var searchText: String
-    let title: String = "Users List"
+    var title: String {
+        "Users List"
+    } // in production apps should be localized
+    var emptyStateMessage: String {
+        "Find GitHub Users. Enter a username to search."
+    }
 
     // MARK: Initializer
 
@@ -39,12 +45,12 @@ final class UserListViewModel: UserListViewModelProtocol {
         repository: UsersListRepositoryProtocol,
         navigationDelegate: UserUINavigation?,
         debounceDelay: TimeInterval = 0.5,
-        searchText: String = "ios"
+        searchText: String = ""
     ) {
         self.searchText = searchText
         self.repository = repository
         self.navigationDelegate = navigationDelegate
-        viewState = .initial
+        viewState = .emptyState
         bindSearchTextPublisher(debounceDelay: debounceDelay)
     }
 
@@ -84,7 +90,11 @@ final class UserListViewModel: UserListViewModelProtocol {
             String
         ) async throws -> UsersListApiModel?)
     ) -> Task<Void, Never>? {
-        guard !searchText.isEmpty else { return nil }
+        guard !searchText.isEmpty else {
+            // show records when user searches
+            self.viewState = .emptyState
+            return nil
+        }
     
         return Task { [weak self] in
             guard let self = self else { return }

@@ -15,7 +15,7 @@ public struct UserDetailApiModel: Codable, Equatable, Sendable {
         case imageUrlString = "avatar_url"
     }
     
-    init(id: String, name: String, followers: Int, publicRepositories: Int, imageUrlString: String) {
+    public init(id: String, name: String, followers: Int, publicRepositories: Int, imageUrlString: String) {
         self.id = id
         self.name = name
         self.followers = followers

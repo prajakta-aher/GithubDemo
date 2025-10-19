@@ -32,15 +32,16 @@ struct UserDetailView<ViewProtocol: UserDetailViewModelProtocol>: View {
                     Text(detail.name)
                         .multilineTextAlignment(.center)
                         .font(.title)
-                    HStack(spacing: SpacingConstants.padding2X) {
+                    VStack(alignment: .leading, spacing: SpacingConstants.padding) {
                         // Image names should be a part of design system
                         textWithicon(imageName: "person.2.fill", text: detail.followers)
                         textWithicon(imageName: "shippingbox.fill", text: detail.publicRepositories)
                     }
-                    .padding()
-                    .background(Color.gray)
+                    .padding(.all, SpacingConstants.padding)
+                    .background(Color.secondary.opacity(0.3))
                     .cornerRadius(SpacingConstants.largeCornerRadius)
                 }
+                .padding(.top, SpacingConstants.padding2X)
             }
         }
         .onAppear {
@@ -56,6 +57,8 @@ struct UserDetailView<ViewProtocol: UserDetailViewModelProtocol>: View {
                 .multilineTextAlignment(.leading)
                 .font(.title2)
         }
+        .frame(maxWidth: .infinity)
+        .padding(.horizontal, -SpacingConstants.padding2X)
     }
     
     @ViewBuilder

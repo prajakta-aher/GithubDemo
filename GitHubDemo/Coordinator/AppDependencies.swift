@@ -21,11 +21,19 @@ struct AppDependencies {
                     )
                 ]
             )
+            let mockDetails = UserDetailApiModel(
+                id: "id",
+                name: "name",
+                followers: 10,
+                publicRepositories: 2,
+                imageUrlString: String()
+            )
             let encoder = JSONEncoder()
-            encoder.dateEncodingStrategy = .iso8601
-            encoder.keyEncodingStrategy = .convertToSnakeCase
-            mockNetworkClient.responseData = try? encoder.encode(
+            mockNetworkClient.pathToResponse["/search/users"] = try? encoder.encode(
                 mockObj
+            )
+            mockNetworkClient.pathToResponse["/users/name"] = try? encoder.encode(
+                mockDetails
             )
             client = mockNetworkClient
         } else {
