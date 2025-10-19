@@ -24,8 +24,8 @@ struct UserListView<ViewProtocol: UserListViewModelProtocol>: View {
                 case .initial:
                     ProgressView()
                         .frame(
-                            width: 50,
-                            height: 50,
+                            width: SpacingConstants.iconWidth,
+                            height: SpacingConstants.iconHeight,
                             alignment: .center
                         )
                         .accessibilityIdentifier(AccessibilityIdentifiers.fullScreenProgress.rawValue)
@@ -41,6 +41,9 @@ struct UserListView<ViewProtocol: UserListViewModelProtocol>: View {
                     List {
                         ForEach(list, id: \.id) { user in
                             UserRowView(userModel: user)
+                                .onTapGesture {
+                                    viewModel.selectedUser(userName: user.name)
+                                }
                         }
                         if hasMoreRecords {
                             ProgressView()
@@ -62,7 +65,7 @@ struct UserListView<ViewProtocol: UserListViewModelProtocol>: View {
             .onAppear {
                 viewModel.loadUsers()
             }
-            .navigationTitle("Users List")
+            .navigationTitle(viewModel.title)
             .searchable(text: $viewModel.searchText)
             .accessibilityIdentifier(AccessibilityIdentifiers.searchBar.rawValue)
             .navigationBarTitleDisplayMode(.inline)
@@ -73,6 +76,7 @@ struct UserListView<ViewProtocol: UserListViewModelProtocol>: View {
 
 #if DEBUG
 final class MockUserListViewModel: UserListViewModelProtocol {
+    var title: String = "Users List"
     @Published var viewState: UserListViewState = .initial
     @Published var searchText: String = ""
 
@@ -89,6 +93,7 @@ final class MockUserListViewModel: UserListViewModelProtocol {
             errorMessage: nil
         )
     }
+    
     func loadNextUsers() {
         viewState = .loaded(
             list: (0..<10).map {
@@ -102,6 +107,9 @@ final class MockUserListViewModel: UserListViewModelProtocol {
             errorMessage: nil
         )
     }
+    
+    func selectedUser(userName: String) {}
+
     init() {}
 }
 #endif

@@ -66,10 +66,10 @@ final class UsersListRepository: UsersListRepositoryProtocol {
     }
 }
 
-final class UsersListRequest: Request<UsersListApiModel> {
+private final class UsersListRequest: Request<UsersListApiModel> {
     init(baseURlString: String, searchTerm: String, page: String = "1") {
         super.init(
-            scheme: "http",
+            scheme: "https",
             baseUrlString: baseURlString,
             path: "/search/users",
             method: .get,

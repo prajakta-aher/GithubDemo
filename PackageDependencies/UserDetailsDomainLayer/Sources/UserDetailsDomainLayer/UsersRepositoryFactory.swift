@@ -2,7 +2,7 @@ import Foundation
 import NetworkKitInterface
 import UserDetailsDomainLayerInterface
 
-public final class UsersListRepositoryFactory: UsersListRepositoryFactoryProtocol {
+public final class UsersRepositoryFactory: UsersRepositoryFactoryProtocol {
     private let networkClient: NetworkClientProtocol
     private let baseUrlString: String
 
@@ -11,7 +11,11 @@ public final class UsersListRepositoryFactory: UsersListRepositoryFactoryProtoco
         self.baseUrlString = baseUrlString
     }
 
-    public func makeRepository() -> UsersListRepositoryProtocol {
+    public func makeListRepository() -> UsersListRepositoryProtocol {
         UsersListRepository(baseUrlString: baseUrlString, networkClient: networkClient)
+    }
+
+    public func makeDetailsRepository() -> any UsersDetailsRepositoryProtocol {
+        UserDetailsRepository(baseUrlString: baseUrlString, networkClient: networkClient)
     }
 }

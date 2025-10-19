@@ -16,11 +16,10 @@ final class AppCoordinator: CoordinatorProtocol {
     func startFlow() {
         let coordinator = UsersCoordinator(
             parentCoordinator: self,
-            repository: UsersListRepositoryFactory(
+            repositoryFactory: UsersRepositoryFactory(
                 baseUrlString: URLHost.default.rawValue,
                 networkClient: AppDependencies.shared.getNetworkClient()
             )
-                .makeRepository()
         )
         childCoordinators.append(coordinator)
         coordinator.startFlow()

@@ -18,18 +18,17 @@ struct UserRowView: View {
     // MARK: Properties
 
     var body: some View {
-        HStack(spacing: 16) {
-            AsyncImage(
-                url: userModel.imageUrl) { image in
-                    image
-                        .resizable()
+        HStack(spacing: SpacingConstants.padding) {
+            AsyncImage(url: userModel.imageUrl) { image in
+                    image.resizable()
                 } placeholder: {
                     Image(
+                        // Image names should be a part of design system
                         systemName: "person.crop.circle.fill"
                     )
-                        .resizable()
+                    .resizable()
                 }
-                .frame(width: 50, height: 50)
+                .frame(width: SpacingConstants.iconWidth, height: SpacingConstants.iconHeight)
                 .scaledToFit()
                 .clipShape(Circle())
                 .overlay(
@@ -38,7 +37,7 @@ struct UserRowView: View {
                         lineWidth: 2
                     )
                 )
-                .shadow(radius: 5)
+                .shadow(radius: SpacingConstants.shadowCornerRadius)
                 .accessibilityIdentifier(AccessibilityIdentifiers.image.rawValue)
             Text(userModel.name)
                 .font(.title3)

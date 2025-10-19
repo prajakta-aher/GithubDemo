@@ -11,9 +11,11 @@ public enum UserListViewState: Equatable {
 @MainActor
 public protocol UserListViewModelProtocol: ObservableObject {
     var viewState: UserListViewState { get }
+    var title: String { get }
     var searchText: String { get set }
     func loadUsers()
     func loadNextUsers()
+    func selectedUser(userName: String)
 }
 
 final class UserListViewModel: UserListViewModelProtocol {
@@ -22,22 +24,26 @@ final class UserListViewModel: UserListViewModelProtocol {
     private let repository: UsersListRepositoryProtocol
     private var searchSubscription: AnyCancellable?
     private var task: Task<Void, Never>?
+    private weak var navigationDelegate: UserUINavigation?
 
     // MARK: Public properties
 
     @Published private(set) var viewState: UserListViewState
     // to limit number of requests on scrolling to next page (rate limiting) - works without default text also
     @Published var searchText: String
+    let title: String = "Users List"
 
     // MARK: Initializer
 
     init(
         repository: UsersListRepositoryProtocol,
+        navigationDelegate: UserUINavigation?,
         debounceDelay: TimeInterval = 0.5,
         searchText: String = "ios"
     ) {
         self.searchText = searchText
         self.repository = repository
+        self.navigationDelegate = navigationDelegate
         viewState = .initial
         bindSearchTextPublisher(debounceDelay: debounceDelay)
     }
@@ -142,5 +148,9 @@ final class UserListViewModel: UserListViewModelProtocol {
             preservePreviousResults: true, // preserve previously loaded results
             loadFunction: repository.loadNextUsersList(searchQuery:)
         )
+    }
+
+    func selectedUser(userName: String) {
+        navigationDelegate?.selectedUser(userName: userName)
     }
 }
