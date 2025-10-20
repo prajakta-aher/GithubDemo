@@ -58,7 +58,7 @@ struct UserDetailView<ViewProtocol: UserDetailViewModelProtocol>: View {
                 .font(.title2)
         }
         .frame(maxWidth: .infinity)
-        .padding(.horizontal, -SpacingConstants.padding2X)
+        .padding(.horizontal, SpacingConstants.padding2X)
     }
     
     @ViewBuilder
