@@ -36,7 +36,7 @@ struct UserRowView: View {
                 .font(.title3)
             Spacer()
         }
-        .frame(maxWidth: .greatestFiniteMagnitude)
+        .contentShape(Rectangle())
         .accessibilityElement(children: .combine)
     }
 }
