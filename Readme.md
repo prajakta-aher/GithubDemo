@@ -22,10 +22,3 @@
   1. Unit Tests
   2. Integration Tests
   3. UI Tests
-
-  ## Screenshots
-    ### Light Mode
-  <img src="Screenshots/list_light.png" width="250"/> <img src="Screenshots/detail_light.png" width="250"/>
-
-  ### Dark Mode
-  <img src="Screenshots/list_dark.png" width="250"/> <img src="Screenshots/detail_dark.png" width="250"/>
